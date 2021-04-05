@@ -1,0 +1,2 @@
+algorithmia
+ibm-watson>=5.1.0
