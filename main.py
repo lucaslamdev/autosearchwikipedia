@@ -1,5 +1,4 @@
-import requests
-import pathlib
+import Algorithmia
 
 
 def search(topic, language):
@@ -7,7 +6,17 @@ def search(topic, language):
         print('Pesquisando...')
     if language == 'en':
         print('Searching...')
-    text = topic
+    # Connect API Algorithimia and "Download" Wikipedia Text
+    # Connecta na API da Algorithimia e "Baixa" texto da Wikipedia
+    algorithimiainput = {
+        "articleName": topic,
+        "lang": language
+    }
+    apikeyfile = open("algorithmia.txt", "r")
+    apikey = apikeyfile.read()
+    client = Algorithmia.client(apikey)
+    algo = client.algo('web/WikipediaParser/0.1.2')
+    text = algo.pipe(algorithimiainput).result
     if language == 'pt':
         print('Pesquisa completada!')
     if language == 'en':
@@ -16,9 +25,10 @@ def search(topic, language):
 
 
 def savetext(topic, text, language):
+
     if language == 'pt':
         print('Salvando Texto Completo...')
-        filetext = open("TextoCompleto.txt", "a+")
+        filetext = open("TextoCompleto.txt", "a+", encoding="utf-8")
         filetext.write("\n===================================")
         filetext.write(f"\n-- Assunto: {topic}")
         filetext.write(f"\n\nTexto: {text}")
@@ -27,7 +37,7 @@ def savetext(topic, text, language):
         print('Salvado com sucesso!')
     if language == 'en':
         print('Save Complete Text...')
-        filetext = open("TextComplete.txt", "a+")
+        filetext = open("TextComplete.txt", "a+", encoding="utf-8")
         filetext.write("\n===================================")
         filetext.write(f"\n-- Topic: {topic}")
         filetext.write(f"\n\nText: {text}")
@@ -35,8 +45,9 @@ def savetext(topic, text, language):
         print('Saved Success!')
         filetext.close()
 
+
 # def summary():
-    #print('Resumindo texto automaticamente! ')
+# print('Resumindo texto automaticamente! ')
 
 
 # def savesummary():
