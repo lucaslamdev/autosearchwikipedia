@@ -42,8 +42,8 @@ def savetext(topic, text, language):
         filetext.write(f"\n-- Topic: {topic}")
         filetext.write(f"\n\nText: {text}")
         filetext.write("\n===================================")
-        print('Saved Success!')
         filetext.close()
+        print('Saved Success!')
 
 
 # def summary(text, summarytopic):
